@@ -16,7 +16,8 @@ namespace CloudProject.Models
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public int Type { get; set; }
-
+        public string Url { get; set; }
+        public string Topic { get; set; }
         public int CompareTo(object obj)
         {
             return this.StartDate.CompareTo((obj as TaskClass).StartDate);
@@ -31,5 +32,7 @@ namespace CloudProject.Models
         Created = 3,
     
     }
+
+ 
 
 }

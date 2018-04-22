@@ -81,7 +81,12 @@ namespace Scheduler.Hubs
             Clients.Client(Users.Where(u => u.UserId == "executer2").First().ConnectionId).startTask();
         }
 
-        public void ExecuteTask1(int perc)
+        public void setResult1(string res, string taskId)
+        {
+
+        }
+
+        public void ExecuteTask1(int perc, string res)
         {
             if (Queue1.Count > 0)
             {
@@ -104,11 +109,14 @@ namespace Scheduler.Hubs
 
                             if (perc == 100)
                             {
+                                task2.jsonResult = res;
                                 task2.TaskResult = Result.Completed;
                                 state = "Completed";
                                 if (Users.Any(u => u.UserId == task2.Owner.ToString()))
                                     Tasks.Remove(Queue1[0]);
                                 Queue1.RemoveAt(0);
+                                if (user != null)
+                                    Clients.Client(user.ConnectionId).setResult(task.Id.ToString(), res);
                             }
                             if (user != null)
                                 Clients.Client(user.ConnectionId).increase(task.Id.ToString(), perc, state);
@@ -132,7 +140,7 @@ namespace Scheduler.Hubs
             }
         }
 
-        public void ExecuteTask2(int perc)
+        public void ExecuteTask2(int perc, string res)
         {
             if (Queue2.Count > 0)
             {
@@ -155,11 +163,14 @@ namespace Scheduler.Hubs
 
                             if (perc == 100)
                             {
+                                task2.jsonResult = res;
                                 task2.TaskResult = Result.Completed;
                                 state = "Completed";
                                 if (Users.Any(u => u.UserId == task2.Owner.ToString()))
                                     Tasks.Remove(Queue2[0]);
                                 Queue2.RemoveAt(0);
+                                if (user != null)
+                                    Clients.Client(user.ConnectionId).setResult(task.Id.ToString(), res);
                             }
                             if (user != null)
                                 Clients.Client(user.ConnectionId).increase(task.Id.ToString(), perc, state);
@@ -183,7 +194,7 @@ namespace Scheduler.Hubs
             }
         }
 
-        
+
         public void Connect(string userId)
         {
             var id = Context.ConnectionId;
@@ -196,6 +207,7 @@ namespace Scheduler.Hubs
             foreach (var task in Tasks.Where(t => t.Owner.ToString() == userId))
             {
                 Clients.Caller.increase(task.Id.ToString(), task.Percentage, task.TaskResult.ToString());
+                Clients.Caller.setResult(task.Id.ToString(), task.jsonResult);
             }
             Tasks.RemoveAll(t => t.Owner.ToString() == userId && t.TaskResult == Result.Canceled || t.TaskResult == Result.Completed);
         }
@@ -249,6 +261,7 @@ namespace Scheduler.Hubs
     class task : TaskClass
     {
         public string connIdUser;
+        public string jsonResult;
     }
 
 }

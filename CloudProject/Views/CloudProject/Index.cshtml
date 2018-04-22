@@ -10,9 +10,10 @@
         <thead>
             <tr>
                 <th>Progress</th>
-                <th>Result</th>
+                <th>State</th>
                 <th>Start</th>
                 <th>End</th>
+                <th>Result</th>
                 <th>Delete</th>
                 <th>Cancel</th>
             </tr>
@@ -32,6 +33,7 @@
                 <td>@ViewBag.Tasks[i].TaskResult.ToString()</td>
                 <td>@ViewBag.Tasks[i].StartDate</td>
                 <td>@ViewBag.Tasks[i].EndDate</td>
+                <td><a id="a-@ViewBag.Tasks[i].Id" href="@ViewBag.Tasks[i].Url">@ViewBag.Tasks[i].Topic</a></td>
                 <td><button class="btn btn-default delBtn">Delete</button></td>
                 <td><button class="btn btn-default cancelBtn" disabled>Cancel</button></td>
             </tr>
@@ -45,8 +47,12 @@
         <thead>
             <tr>
                 <th>Progress</th>
-                <th>Result</th>
+                <th>State</th>
                 <th>Start</th>
+                <th>End</th>
+                <th>Result</th>
+                <th>Delete</th>
+                <th>Cancel</th>
             </tr>
         </thead>
         <tbody id="tbody2" class="tbody">
@@ -64,6 +70,7 @@
                 <td>@ViewBag.Tasks2[i].TaskResult.ToString()</td>
                 <td>@ViewBag.Tasks2[i].StartDate</td>
                 <td>@ViewBag.Tasks2[i].EndDate</td>
+                <td><a id="a-@ViewBag.Tasks2[i].Id" href="@ViewBag.Tasks2[i].Url">@ViewBag.Tasks2[i].Topic</a></td>
                 <td><button class="btn btn-default delBtn">Delete</button></td>
                 <td><button class="btn btn-default cancelBtn" disabled>Cancel</button></td>
             </tr>

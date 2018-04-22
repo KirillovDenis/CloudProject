@@ -30,6 +30,9 @@ namespace CloudProject.Controllers
         [AllowAnonymous]
         public ActionResult Login(User model, string returnUrl)
         {
+        //    db.Users.RemoveRange(db.Users);
+        //    db.Tasks.RemoveRange(db.Tasks);
+        //    db.SaveChanges();
 
             var users = db.Users;
             var user = db.Users.Where(u => u.Password == model.Password && u.Login == model.Login).FirstOrDefault();

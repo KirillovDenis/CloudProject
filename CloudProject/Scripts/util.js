@@ -29,7 +29,7 @@
 
     hub.client.addTask = function (jsonTask) {
         var task = JSON.parse(jsonTask);
-        
+
         $('#tbody' + task.Type).append(
             `<tr>
             <td>
@@ -43,6 +43,7 @@
             <td>Created</td>
             <td>${task.StartDate}</td>
             <td>${task.EndDate}</td>
+            <td><a id="a-${task.Id}"></a></td>
             <td><button class="btn btn-default delBtn" disabled>Delete</button></td>
             <td><button id="" class="btn btn-default cancelBtn">Cancel</button></td>
         </tr>`);
@@ -77,7 +78,23 @@
         });
     });
 
-        
+
+    newHub.on('setResult', function (taskId, res) {
+
+        var news =  JSON.parse(res);
+
+        if (news.length == 2) {
+            hub.server.setResult(taskId, news[0].url, news[0].title);
+            $('#a-' + taskId).attr('href', news[0].url);
+            $('#a-' + taskId).text(news[0].title);
+
+        }
+        else {
+            hub.server.setResult(taskId, news[0][0].url, news[0][0].title);
+            $('#a-' + taskId).attr('href', news[0][0].url);
+            $('#a-' + taskId).text(news[0][0].title);
+        }
+    });
 
     newHub.on('cancel', function (id) {
         $('#' + id).parent().parent().next().text('Canceled');

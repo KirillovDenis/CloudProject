@@ -29,12 +29,24 @@ namespace CloudProject.Hubs
                 Clients.Caller.disable("cancel", true, taskId);
             }
         }
+
+        public void SetResult(string taskId, string url, string title)
+        {
+            var task = db.Tasks.Where(t => t.Id.ToString() == taskId).FirstOrDefault();
+            if (task != null)
+            {
+                task.Topic = title;
+                task.Url = url;
+                db.SaveChanges();
+            }
+        }
+
         public void AddTask(string userId, int type)
         {
             var user = db.Users.Where(u => u.Id == new Guid(userId)).FirstOrDefault();
             if (user != null)
             {
-                var task = new TaskClass() { Id = Guid.NewGuid(), Type = type, StartDate = DateTime.Now.ToString(), Owner = new Guid(userId), Percentage = 0, TaskResult = Result.Created };
+                var task = new TaskClass() { Id = Guid.NewGuid(), Type = type, StartDate = DateTime.Now.ToString(), Owner = new Guid(userId), Percentage = 0, TaskResult = Result.Created,  Topic="", Url=""  };
 
                 var json = new JavaScriptSerializer().Serialize(task);
 
