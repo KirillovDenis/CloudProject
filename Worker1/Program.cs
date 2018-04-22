@@ -11,7 +11,6 @@ namespace Worker1
     class Program
     {
         static bool IsCanceled = false;
-        static int Progress { get; set; }
         static void Main(string[] args)
         {
             var connection = new HubConnection("http://localhost/Scheduler/mysignalr", useDefaultUrl: false);
