@@ -14,7 +14,7 @@ namespace Worker2
         static int Progress { get; set; }
         static void Main(string[] args)
         {
-            var connection = new HubConnection("http://localhost:14675/mysignalr", useDefaultUrl: false);
+            var connection = new HubConnection("http://localhost/Scheduler/mysignalr", useDefaultUrl: false);
             //Make proxy to hub based on hub name on server
             var myHub = connection.CreateHubProxy("TaskHub2");
             //Start connection

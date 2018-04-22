@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var conn = 'http://localhost:14675/mysignalr';
+    var conn = 'http://localhost/Scheduler/mysignalr';
     var connection = $.hubConnection(conn, { useDefaultPath: false });
     var newHub = connection.createHubProxy('taskHub2');
 
